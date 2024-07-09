@@ -27,7 +27,6 @@ export class MainComponent {
   }
 
   customMethod2() {
-    // removeCookie('XSRF-TOKEN')!;
     this.loginService.callm1post().subscribe(
       response => {
         console.log("POST /m1 response:", response.body);

@@ -37,6 +37,7 @@ export class MyInterceptorInterceptor implements HttpInterceptor {
     }
 
     httpHeaders = httpHeaders.append('X-Requested-With', 'XMLHttpRequest');
+    
     const xhr = request.clone({
       headers: httpHeaders
     });

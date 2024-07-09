@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { User } from '../model/users/users.model';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { getCookie } from 'typescript-cookie';
 
 @Injectable({
   providedIn: 'root'
@@ -19,11 +20,15 @@ export class LoginService {
 
   callm1get(): Observable<any>
   {
-    return this.http.get("http://localhost:8080/m1", { observe: 'response',responseType: 'text'  });
+    return this.http.get("http://localhost:8080/m1", { observe: 'response',responseType: 'text' , withCredentials: true });
   }
 
   callm1post(): Observable<any>
   {
-    return this.http.post("http://localhost:8080/m1", { observe: 'response',withCredentials: true, responseType: 'text'  });
+    const xsrfToken = getCookie('XSRF-TOKEN'); // Fetch the CSRF token from cookies
+    const headers = new HttpHeaders({
+      'X-XSRF-TOKEN': xsrfToken || ''
+    });
+    return this.http.post("http://localhost:8080/m1", { observe: 'response',withCredentials: true, responseType: 'text' ,headers });
   }
 }
